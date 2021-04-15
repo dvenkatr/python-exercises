@@ -15,45 +15,38 @@ class BankAccount:
 
     def get_balance(self):
         with self.lock:
-            if(self.status != Status.CLOSED):
-                return self.balance
-            else:
-                raise ValueError("Account is closed")
+            if(self.status == Status.CLOSED):
+                raise ValueError ("Account is closed")
+            return self.balance
 
     def open(self):
         with self.lock:
             if(self.status == Status.OPEN):
                 raise ValueError("Account is already open")
-            else:
-                self.status = Status.OPEN
+            self.status = Status.OPEN
 
     def deposit(self, amount):
         with self.lock:
-            if(self.status != Status.CLOSED):
-                if(amount > 0):
-                    self.balance += amount
-                else:
-                    raise ValueError("Cannot deposit negative amount")
-            else:
+            if(self.status == Status.CLOSED):
                 raise ValueError("Account is closed")
+            if(amount < 0):
+                raise ValueError("Cannot deposit negative amount")
+            self.balance += amount
 
     def withdraw(self, amount):
         with self.lock:
-            if(self.status != Status.CLOSED):
-                if(amount > 0):
-                    if(self.balance >= amount):
-                        self.balance -= amount
-                    else:
-                        raise ValueError("Insufficient balance")
-                else:
-                    raise ValueError("Cannot withdraw negative amount")
-            else:
+            if(self.status == Status.CLOSED): 
                 raise ValueError("Account is closed")
+            if(amount < 0):
+                raise ValueError("Cannot withdraw negative amount")
+            if(self.balance < amount):
+                raise ValueError("Insufficient balance")
+            self.balance -= amount
 
     def close(self):
         with self.lock:
-            if(self.status == Status.OPEN):
-                self.status = Status.CLOSED
-                self.balance = 0
-            else:
-                raise ValueError("Account is already closed")
+            if(self.status != Status.OPEN):
+                raise ValueError("Account has been created but not opened or it has already been closed")
+            self.status = Status.CLOSED
+            self.balance = 0
+                

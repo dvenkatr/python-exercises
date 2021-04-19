@@ -1,6 +1,8 @@
 from string import punctuation
 
-def count_words(sentence):
+from collections import Counter
+
+def count_words(sentence : str) -> dict:
 
     # Replace delimiters with space, and convert string to lower case
     sentence = sentence.translate(str.maketrans({ 
@@ -28,11 +30,4 @@ def count_words(sentence):
 
     l = list(map(handle_quotes, l))
 
-    # Get unique words from sentence
-    s = set(l)
-
-    # Count words
-    word_count = {}
-    for i in s:
-        word_count[i] = l.count(i)
-    return word_count
+    return Counter(l)

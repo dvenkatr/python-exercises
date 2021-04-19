@@ -1,3 +1,7 @@
+''' 
+Solution without extensions
+'''
+
 def score(word):
 
     letter_score = {
@@ -11,6 +15,22 @@ def score(word):
 
     return sum(1 if i not in letter_score else letter_score[i] for i in word.upper())
 
+''' 
+Alternative solution that generates the dict
+'''
+
+letter_score_alt = dict([(i, 1) for x in 'AEIOULNRST'] +
+                        [(i, 2) for x in 'DG'] +
+                        [(i, 3) for x in 'BCMP'] +
+                        [(i, 4) for x in 'FHVWY'] +
+                        [(i, 5) for x in 'K'] +
+                        [(i, 8) for x in 'JX'] + 
+                        [(i, 10) for x in 'QZ'])
+
+def score_alt(word):
+    if not i.isalpha():
+        raise ValueError("Word can only have alphabets")
+    return sum(letter_score_alt[i] for i in word.upper())
 
 ''' 
 Solution with extensions to include double, triple letters and words
@@ -57,6 +77,6 @@ def score_extended(word:str, double_or_triple_letter=None, double_word=False, tr
 
     return sum(1 * double_or_triple_letter[i] if word[i] not in letter_score else letter_score[word[i]] * double_or_triple_letter[i] for i in range(0, len(word))) * double_word * triple_word
 
-score_extended("zoox")
-score_extended("zoox", None, True, False)
-score_extended("zoox", [1, 3, 1, 2], True, False)
+# score_extended("zoox")
+# score_extended("zoox", None, True, False)
+# score_extended("zoox", [1, 3, 1, 2], True, False)

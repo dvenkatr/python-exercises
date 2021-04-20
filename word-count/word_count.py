@@ -18,7 +18,7 @@ def count_words(sentence : str) -> dict:
 
     # Remove all punctuation except apostrophe    
     punctuation_except_apostrophe = punctuation.replace("'", "")
-    sentence = sentence.translate(str.maketrans(',', ' ', punctuation_except_apostrophe))
+    sentence = sentence.translate(str.maketrans('', '', punctuation_except_apostrophe))
 
     # Get words from sentence
     l = sentence.split()

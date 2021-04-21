@@ -1,3 +1,13 @@
+'''
+# Bonus points to deal with mutable data structures
+
+In accordance with the Python philosophy, I have prefixed an underscore 
+to the data member to indicate that it is private.
+
+https://docs.python.org/3/tutorial/classes.html#tut-private
+https://stackoverflow.com/questions/2064202/private-members-in-python
+'''
+
 from collections import defaultdict
 
 class School:

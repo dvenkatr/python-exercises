@@ -42,7 +42,7 @@ def is_triangle(sides : list) -> list:
 '''
 # Alternative solution using sets
 # Inequality test: a + b > c or sum(a, b, c) > 2c even if c = max(a, b, c)
-'''
+
 
 def equilateral(sides : list) -> bool:
     if not is_triangle(sides):
@@ -76,3 +76,23 @@ def is_triangle(sides : list) -> list:
 
 def num_of_equal_sides(sides : list) -> int:
     return len(set(sides))
+'''
+
+'''
+Alternative using decorators
+'''
+
+def is_valid(function):
+    return lambda sides: all(sides) and 2 * max(sides) < sum(sides) and function(sides)
+
+@is_valid
+def is_equilateral(sides):
+    return len(set(sides)) == 1
+
+@is_valid
+def is_isosceles(sides):
+    return len(set(sides)) < 3
+
+@is_valid
+def is_scalene(sides):
+    return len(set(sides)) == 3

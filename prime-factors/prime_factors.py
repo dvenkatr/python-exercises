@@ -1,19 +1,23 @@
-def factors(value):
+'''
+# Simple solution
+'''
+
+# def factors(value):
     
-    if value <= 0:
-        raise ValueError("Number should be a non-zero positive integer")
+#     if value <= 0:
+#         raise ValueError("Number should be a non-zero positive integer")
 
-    prime_factors = []
-    divisor = 2
+#     prime_factors = []
+#     divisor = 2
 
-    while value != 1:
-        if value % divisor == 0:
-            prime_factors.append(divisor)
-            value /= divisor
-            print(value, divisor, prime_factors)
-        else:
-            divisor += 1
-    return prime_factors
+#     while value != 1:
+#         if value % divisor == 0:
+#             prime_factors.append(divisor)
+#             value /= divisor
+#             print(value, divisor, prime_factors)
+#         else:
+#             divisor += 2
+#     return prime_factors
 
 
 '''
@@ -28,26 +32,76 @@ Also note
 4. In line 11, if prime_factors -> 0x100 = None, prime_factors -> 0x200 = [] 
 5. The factors are added to 0x200
 
+'''
 
-import sys
-sys.setrecursionlimit(10000)
+# import sys
+# sys.setrecursionlimit(10000)
 
-def factors(value, divisor = 2, prime_factors = None):
+# def factors(value, divisor = 2, prime_factors = None):
+    
+#     if value <= 0:
+#         raise ValueError("Number should be a non-zero positive integer")
+
+#     if prime_factors == None: # See explanation above
+#         prime_factors = []
+
+#     if value == 1:
+#         return prime_factors
+
+#     if value % divisor == 0:
+#         prime_factors.append(divisor)
+#         return factors(value/divisor, divisor, prime_factors)
+#     else:
+#         if divisor == 2:
+#             divisor += 1
+#         else:
+#             divisor += 2
+#         return factors(value, divisor, prime_factors)
+
+'''
+# Using an immutable data structure (tuple) instead of a mutable data structure (list)
+'''
+
+# def factors(value, divisor = 2, prime_factors = ()):
+    
+#     if value <= 0:
+#         raise ValueError("Number should be a non-zero positive integer")
+
+#     if value == 1:
+#         return list(prime_factors)
+
+#     if value % divisor == 0:
+#         prime_factors = prime_factors + (divisor,)
+#         return factors(value/divisor, divisor, prime_factors)
+#     else:
+#         if divisor == 2: 
+#             divisor += 1
+#         else: 
+#             divisor += 2
+#         return factors(value, divisor, prime_factors)
+
+'''
+# Optimise for tail-call recursion using the tail-recursive package
+# pip install tail-recursive
+'''
+
+from tail_recursive import tail_recursive
+
+@tail_recursive
+def factors(value, divisor = 2, prime_factors = []):
     
     if value <= 0:
         raise ValueError("Number should be a non-zero positive integer")
-
-    if prime_factors == None: # See explanation above
-        prime_factors = []
 
     if value == 1:
         return prime_factors
 
     if value % divisor == 0:
         prime_factors.append(divisor)
-        return factors(value/divisor, divisor, prime_factors)
+        return factors.tail_call(value/divisor, divisor, prime_factors)
     else:
-        divisor += 1
-        return factors(value, divisor, prime_factors)
-
-'''
+        if divisor == 2: 
+            divisor += 1
+        else: 
+            divisor += 2
+        return factors.tail_call(value, divisor, prime_factors)

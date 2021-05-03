@@ -31,8 +31,8 @@ def meetup(year, month, week, day_of_week):
 
     while(True):
         try:
-            date_guess = str(start_day) + " " + str(month) + " " + str(year)
-            day_guess = datetime.datetime.strptime(date_guess, '%d %m %Y').weekday()
+            date_guess = datetime.date(year, month, start_day)
+            day_guess = date_guess.weekday()
             if day_name[day_guess] == day_of_week:
                 return datetime.date(year, month, start_day + 7 * nth)
             start_day +=delta

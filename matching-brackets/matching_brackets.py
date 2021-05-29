@@ -6,25 +6,22 @@ brackets = {
 
 def is_paired(input_string : str) -> bool:
 
-    unmatched_brackets = ''
+    unmatched_brackets = []
     
     for char in input_string:
 
-        if char in brackets.keys() or char in brackets.values():
-            if char in brackets.keys():
-                unmatched_brackets += i
+        if char in brackets.keys():
+            unmatched_brackets.append(char)
+        elif char in brackets.values():
+            if unmatched_brackets == []:
+                return False
+            elif char == brackets[unmatched_brackets[-1]]:
+                unmatched_brackets.pop()
             else:
-                try:
-                    if char == brackets[unmatched_brackets[-1]]:
-                        unmatched_brackets = unmatched_brackets[:-1]
-                    else:
-                        return False
-                except:
-                    return False
+                return False
 
-    if unmatched_brackets == '':
+    if unmatched_brackets == []:
         return True
     else:
         return False
-
 
